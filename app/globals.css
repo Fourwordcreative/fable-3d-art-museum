@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #1a1612;
+  --parchment: #f4efe6;
+  --gold: #c9a35c;
+  --night: #0b0c10;
+}
+
+html,
+body {
+  height: 100%;
+  background: var(--night);
+  color: var(--parchment);
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: var(--font-body), Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display), "Times New Roman", serif;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--ink);
+}

@@ -1,0 +1,34 @@
+Creating schema…
+
+=== Medieval & Gothic (500–1400) ===
+  !! Duccio: only 6 usable paintings (of 13 candidates) — keeping anyway, flagged
+  ✓ Duccio (1255–1319): 6 paintings
+
+=== Expressionism (1905–1935) ===
+  !! Egon Schiele: only 7 usable paintings (of 11 candidates) — keeping anyway, flagged
+  ✓ Egon Schiele (1890–1918): 7 paintings
+
+=== Cubism (1907–1925) ===
+  ✓ Jean Metzinger (1883–1956): 12 paintings
+  ✓ Robert Delaunay (1885–1941): 10 paintings
+
+=== Abstract Expressionism (1943–1965) ===
+  ✓ Willem de Kooning (1904–1997): 8 paintings
+
+=== Pop Art (1955–1975) ===
+  !! Jasper Johns: only 5 usable paintings (of 9 candidates) — keeping anyway, flagged
+  ✓ Jasper Johns (1930–now): 5 paintings
+
+=== Post-War & Contemporary (1945–2026) ===
+  !! Francis Bacon (artist): only 0 usable paintings (of 0 candidates) — keeping anyway, flagged
+  !! Francis Bacon (artist): zero paintings, skipping artist
+  !! David Hockney: only 7 usable paintings (of 17 candidates) — keeping anyway, flagged
+  ✓ David Hockney (1937–now): 7 paintings
+
+Done. 7 artists, 55 paintings.
+
+Artists below painting minimum:
+  Jasper Johns: 5
+  Duccio: 6
+  David Hockney: 7
+  Egon Schiele: 7

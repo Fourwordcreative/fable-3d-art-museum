@@ -1,0 +1,126 @@
+Creating schema…
+
+=== Medieval & Gothic (500–1400) ===
+  ✓ Cimabue (1240–1302): 10 paintings
+  !! Duccio: only 6 usable paintings (of 6 candidates) — keeping anyway, flagged
+  ✓ Duccio (1255–1319): 6 paintings
+  ✓ Giotto (1267–1337): 12 paintings
+  ✓ Simone Martini (1284–1344): 8 paintings
+
+=== Italian Renaissance (1400–1600) ===
+  ✓ Sandro Botticelli (1445–1510): 12 paintings
+  ✓ Leonardo da Vinci (1452–1519): 12 paintings
+  !! Michelangelo: only 2 usable paintings (of 2 candidates) — keeping anyway, flagged
+  ✓ Michelangelo (1475–1564): 2 paintings
+  ✓ Raphael (1483–1520): 12 paintings
+  ✓ Titian (1488–1576): 12 paintings
+
+=== Northern Renaissance (1430–1580) ===
+  ✓ Jan van Eyck (1390–1441): 12 paintings
+  ✓ Hieronymus Bosch (1450–1516): 12 paintings
+  ✓ Albrecht Dürer (1471–1528): 12 paintings
+  ✓ Pieter Bruegel the Elder (1525–1569): 12 paintings
+
+=== Baroque (1600–1750) ===
+  ✓ Caravaggio (1571–1610): 12 paintings
+  ✓ Peter Paul Rubens (1577–1640): 12 paintings
+  ✓ Artemisia Gentileschi (1593–1653): 12 paintings
+  ✓ Diego Velázquez (1599–1660): 11 paintings
+  ✓ Rembrandt (1606–1669): 12 paintings
+  !! Johannes Vermeer: only 1 usable paintings (of 1 candidates) — keeping anyway, flagged
+  ✓ Johannes Vermeer (1632–1675): 1 paintings
+
+=== Rococo (1700–1780) ===
+  ✓ Antoine Watteau (1684–1721): 12 paintings
+  ✓ François Boucher (1703–1770): 10 paintings
+  ✓ Jean-Honoré Fragonard (1732–1806): 12 paintings
+
+=== Neoclassicism (1760–1830) ===
+  ✓ Angelica Kauffman (1741–1807): 12 paintings
+  ✓ Jacques-Louis David (1748–1825): 12 paintings
+  ✓ Jean-Auguste-Dominique Ingres (1780–1867): 12 paintings
+
+=== Romanticism (1780–1850) ===
+  ✓ Francisco Goya (1746–1828): 12 paintings
+  ✓ J. M. W. Turner (1775–1851): 12 paintings
+  ✓ Caspar David Friedrich (1774–1840): 12 paintings
+  ✓ Théodore Géricault (1791–1824): 10 paintings
+  ✓ Eugène Delacroix (1798–1863): 12 paintings
+
+=== Realism (1840–1880) ===
+  ✓ Jean-François Millet (1814–1875): 12 paintings
+  ✓ Gustave Courbet (1819–1877): 12 paintings
+  ✓ Édouard Manet (1832–1883): 12 paintings
+  ✓ Winslow Homer (1836–1910): 12 paintings
+
+=== Impressionism (1860–1895) ===
+  ✓ Camille Pissarro (1830–1903): 12 paintings
+  ✓ Edgar Degas (1834–1917): 12 paintings
+  ✓ Claude Monet (1840–1926): 12 paintings
+  ✓ Pierre-Auguste Renoir (1841–1919): 12 paintings
+  ✓ Mary Cassatt (1844–1926): 12 paintings
+
+=== Post-Impressionism (1885–1910) ===
+  ✓ Paul Cézanne (1839–1906): 12 paintings
+  ✓ Paul Gauguin (1848–1903): 12 paintings
+  ✓ Vincent van Gogh (1853–1890): 12 paintings
+  ✓ Georges Seurat (1859–1891): 9 paintings
+  ✓ Henri de Toulouse-Lautrec (1864–1901): 12 paintings
+
+=== Expressionism (1905–1935) ===
+  ✓ Edvard Munch (1863–1944): 12 paintings
+  ✓ Wassily Kandinsky (1866–1944): 11 paintings
+  ✓ Franz Marc (1880–1916): 12 paintings
+  ✓ Ernst Ludwig Kirchner (1880–1938): 8 paintings
+  !! Egon Schiele: only 7 usable paintings (of 7 candidates) — keeping anyway, flagged
+  ✓ Egon Schiele (1890–1918): 7 paintings
+
+=== Cubism (1907–1925) ===
+  ✓ Pablo Picasso (1881–1973): 12 paintings
+  ✓ Georges Braque (1882–1963): 8 paintings
+  ✓ Juan Gris (1887–1927): 10 paintings
+  !! Fernand Léger: only 3 usable paintings (of 6 candidates) — keeping anyway, flagged
+  ✓ Fernand Léger (1881–1955): 3 paintings
+
+=== Surrealism (1920–1955) ===
+  ✓ Max Ernst (1891–1976): 12 paintings
+  !! no summary for Joan Miró, skipping
+  !! René Magritte: only 0 usable paintings (of 0 candidates) — keeping anyway, flagged
+  !! René Magritte: zero paintings, skipping artist
+  ✓ Salvador Dalí (1904–1989): 12 paintings
+  !! Frida Kahlo: only 5 usable paintings (of 5 candidates) — keeping anyway, flagged
+  ✓ Frida Kahlo (1907–1954): 5 paintings
+
+=== Abstract Expressionism (1943–1965) ===
+  !! Willem de Kooning: only 5 usable paintings (of 6 candidates) — keeping anyway, flagged
+  ✓ Willem de Kooning (1904–1997): 5 paintings
+  ✓ Jackson Pollock (1912–1956): 8 paintings
+  ✓ Mark Rothko (1903–1970): 11 paintings
+
+=== Pop Art (1955–1975) ===
+  !! Jasper Johns: only 3 usable paintings (of 5 candidates) — keeping anyway, flagged
+  ✓ Jasper Johns (1930–now): 3 paintings
+  ✓ Andy Warhol (1928–1987): 12 paintings
+  ✓ Roy Lichtenstein (1923–1997): 12 paintings
+
+=== Contemporary (1975–2026) ===
+  !! Gerhard Richter: only 1 usable paintings (of 14 candidates) — keeping anyway, flagged
+  ✓ Gerhard Richter (1932–now): 1 paintings
+  ✓ Jean-Michel Basquiat (1960–1988): 12 paintings
+  !! David Hockney: only 7 usable paintings (of 17 candidates) — keeping anyway, flagged
+  ✓ David Hockney (1937–now): 7 paintings
+  ✓ Banksy (1973–now): 12 paintings
+
+Done. 66 artists, 682 paintings.
+
+Artists below painting minimum:
+  Johannes Vermeer: 1
+  Gerhard Richter: 1
+  Michelangelo: 2
+  Jasper Johns: 3
+  Fernand Léger: 3
+  Willem de Kooning: 5
+  Frida Kahlo: 5
+  Duccio: 6
+  David Hockney: 7
+  Egon Schiele: 7
