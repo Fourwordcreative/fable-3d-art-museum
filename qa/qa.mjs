@@ -9,7 +9,12 @@ const check = (name, ok, detail = "") => {
 };
 
 const browser = await chromium.launch();
-const page = await browser.newPage({ viewport: { width: 1600, height: 900 } });
+const page = await browser.newPage({
+  viewport: { width: 1600, height: 900 },
+  ...(process.env.QA_PASS
+    ? { httpCredentials: { username: "pat", password: process.env.QA_PASS } }
+    : {}),
+});
 const errors = [];
 page.on("pageerror", (e) => errors.push(`pageerror: ${e.message}`));
 page.on("console", (m) => {
