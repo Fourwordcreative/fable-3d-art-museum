@@ -61,6 +61,8 @@ export default function ArtistCard({
   };
 
   const dates = `${artist.birthYear ?? "?"} – ${artist.deathYear ?? "present"}`;
+  // Wikipedia descriptors often end with "(1606–1669)" — we already show dates.
+  const descriptor = artist.nationality?.replace(/\s*\([^)]*\d{4}[^)]*\)\s*$/, "");
   const bioLines = artist.bio.split(/\n+/).slice(0, 2);
 
   return (
@@ -110,7 +112,7 @@ export default function ArtistCard({
             </h2>
             <p data-stagger className="mt-0.5 text-sm tracking-[0.22em] text-[#6b5d49]">
               {dates}
-              {artist.nationality ? ` · ${artist.nationality}` : ""}
+              {descriptor ? ` · ${descriptor}` : ""}
             </p>
             <div
               data-stagger

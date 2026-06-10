@@ -65,11 +65,13 @@ type Api = {
 const plasterBg = (color: string): string =>
   [
     // top-down picture-light wash
-    "radial-gradient(130% 85% at 50% -15%, rgba(255,233,195,0.13), rgba(255,233,195,0.02) 50%, transparent 72%)",
+    "radial-gradient(130% 85% at 50% -15%, rgba(255,233,195,0.16), rgba(255,233,195,0.03) 50%, transparent 72%)",
+    // period tint washing down from the swatch — makes each bay read in color
+    `linear-gradient(180deg, color-mix(in srgb, ${color} 36%, transparent) 0%, color-mix(in srgb, ${color} 17%, transparent) 24%, color-mix(in srgb, ${color} 7%, transparent) 52%, transparent 78%)`,
+    // shaded panel edges so adjacent sections separate even when unzoomed
+    "linear-gradient(90deg, rgba(0,0,0,0.55), transparent 5%, transparent 95%, rgba(0,0,0,0.55))",
     // floor shadow pooling at the bottom of the wall
     "radial-gradient(120% 90% at 50% 115%, rgba(0,0,0,0.55), transparent 58%)",
-    // faint period tint baked into the plaster
-    `radial-gradient(100% 140% at 50% 40%, color-mix(in srgb, ${color} 9%, transparent), transparent 75%)`,
     // subtle vertical grain
     "repeating-linear-gradient(90deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 2px, transparent 2px, transparent 6px)",
     // warm dark plaster
@@ -188,12 +190,17 @@ export default function GalleryStripTimeline({
     const vw = () => root.clientWidth || 1;
     const fitZ = () => (vw() * 0.94) / WORLD_W;
     const minZ = () => fitZ() * 0.95;
+    // home view slightly over-fills the viewport so there is corridor to walk
+    const homeZ = () => fitZ() * 1.18;
     const clampZ = (z: number) => Math.min(MAX_Z, Math.max(minZ(), z));
 
+    // Unified clamp with slack on both ends. NOTE: never hard-recenter when the
+    // world fits the viewport — that made every pan attempt a silent no-op.
     const clampX = () => {
-      const wpx = WORLD_W * view.z;
-      if (wpx <= vw()) view.x = (wpx - vw()) / 2;
-      else view.x = Math.max(-50, Math.min(wpx - vw() + 50, view.x));
+      const over = WORLD_W * view.z - vw();
+      const lo = Math.min(0, over) - 90;
+      const hi = Math.max(0, over) + 90;
+      view.x = Math.max(lo, Math.min(hi, view.x));
     };
 
     const applyChildren = () => {
@@ -356,7 +363,7 @@ export default function GalleryStripTimeline({
 
     const overview = () => {
       setDim(null);
-      const z = fitZ();
+      const z = homeZ();
       goTo((WORLD_W * z - vw()) / 2, z, 1.2);
     };
 
@@ -366,17 +373,19 @@ export default function GalleryStripTimeline({
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
       viewTween?.kill();
+      // normalize line/page delta modes (Firefox) to pixels
+      const k = e.deltaMode === 1 ? 33 : e.deltaMode === 2 ? vw() : 1;
       if (e.ctrlKey || e.metaKey) {
         // pinch / precision zoom toward cursor
         const rect = root.getBoundingClientRect();
         const cx = e.clientX - rect.left;
         const wx = (view.x + cx) / view.z;
-        const nz = clampZ(view.z * Math.exp(-e.deltaY * 0.0022));
+        const nz = clampZ(view.z * Math.exp(-e.deltaY * k * 0.0028));
         view.z = nz;
         view.x = wx * nz - cx;
       } else {
         // corridor feel: vertical wheel also walks you down the hall
-        view.x += e.deltaX + e.deltaY;
+        view.x += (e.deltaX + e.deltaY) * k;
       }
       apply();
     };
@@ -389,12 +398,22 @@ export default function GalleryStripTimeline({
     const onDown = (e: PointerEvent) => {
       if (e.pointerType === "mouse" && e.button !== 0) return;
       pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
-      root.setPointerCapture(e.pointerId);
+      // NOTE: do NOT setPointerCapture here — capturing on pointerdown
+      // retargets the subsequent click to the root, which silently killed
+      // every header/placard click. Capture is deferred until a real drag.
       viewTween?.kill();
       draggedRef.current = false;
       moved = 0;
       lastPX = e.clientX;
       if (pointers.size === 2) {
+        // pinch never produces a click — safe to capture both pointers now
+        for (const id of pointers.keys()) {
+          try {
+            root.setPointerCapture(id);
+          } catch {
+            /* pointer may already be gone */
+          }
+        }
         const [a, b] = [...pointers.values()];
         if (a && b) pinchDist = Math.hypot(a.x - b.x, a.y - b.y);
       }
@@ -424,7 +443,14 @@ export default function GalleryStripTimeline({
       const dx = e.clientX - lastPX;
       lastPX = e.clientX;
       moved += Math.abs(dx);
-      if (moved > 5) draggedRef.current = true;
+      if (moved > 5 && !draggedRef.current) {
+        draggedRef.current = true;
+        try {
+          root.setPointerCapture(e.pointerId); // safe now: click is suppressed anyway
+        } catch {
+          /* ignore */
+        }
+      }
       view.x -= dx;
       apply();
     };
@@ -448,7 +474,7 @@ export default function GalleryStripTimeline({
     window.addEventListener("resize", onResize);
 
     // ---- initial view + entrance --------------------------------------------
-    view.z = fitZ();
+    view.z = homeZ();
     view.x = (WORLD_W * view.z - vw()) / 2;
     apply();
 
@@ -572,7 +598,11 @@ export default function GalleryStripTimeline({
             ref={(el) => {
               groupEls.current[i] = el;
             }}
-            className="absolute inset-0"
+            // pointer-events-none is critical: these stacked transparent
+            // inset-0 boxes would otherwise swallow every click aimed at
+            // headers/placards of earlier sections. Interactive children
+            // re-enable pointer events explicitly.
+            className="pointer-events-none absolute inset-0"
           >
             {/* wall section (the ONLY x-scaled element; gradients stretch fine) */}
             <div
@@ -591,8 +621,8 @@ export default function GalleryStripTimeline({
             >
               {/* period color swatch along the top edge */}
               <div
-                className="absolute inset-x-0 top-0 h-[5px]"
-                style={{ background: s.p.color, opacity: 0.7 }}
+                className="absolute inset-x-0 top-0 h-[8px]"
+                style={{ background: s.p.color, opacity: 0.9 }}
               />
               {/* wainscot hairline */}
               <div
@@ -615,12 +645,12 @@ export default function GalleryStripTimeline({
               ref={(el) => {
                 partEls.current[i] = el;
               }}
-              className="absolute left-0 w-[2px] -ml-px"
+              className="absolute left-0 w-[3px] -ml-[1.5px]"
               style={{
                 top: BAND_TOP,
                 height: BAND_H,
-                background: `linear-gradient(180deg, transparent, ${GOLD}90 16%, ${GOLD}90 84%, transparent)`,
-                boxShadow: `0 0 6px ${GOLD}30`,
+                background: `linear-gradient(180deg, transparent, ${GOLD}ee 10%, #f0d9a6 50%, ${GOLD}ee 90%, transparent)`,
+                boxShadow: `0 0 12px ${GOLD}66, 0 0 3px ${GOLD}`,
               }}
             />
 
@@ -633,17 +663,32 @@ export default function GalleryStripTimeline({
               onClick={() => {
                 if (!draggedRef.current) apiRef.current?.frameSection(i);
               }}
-              className="absolute left-0 cursor-pointer overflow-hidden text-left"
+              className="pointer-events-auto absolute left-0 cursor-pointer overflow-hidden text-left"
               style={{ top: "calc(20% + 16px)" }}
             >
               <div
-                className="font-display overflow-hidden text-[19px] leading-none font-semibold tracking-[0.13em] text-ellipsis whitespace-nowrap text-[#f4efe6]"
-                style={{ fontVariant: "small-caps" }}
+                className="font-display overflow-hidden text-[21px] leading-none font-semibold tracking-[0.13em] text-ellipsis whitespace-nowrap text-[#f4efe6]"
+                style={{
+                  fontVariant: "small-caps",
+                  textShadow: "0 1px 3px rgba(0,0,0,0.8)",
+                }}
               >
                 {s.p.name}
               </div>
-              <div className="mt-1.5 overflow-hidden text-[10px] tracking-[0.28em] whitespace-nowrap text-[#c9a35c]/85">
+              <div
+                className="mt-1.5 h-[2px] w-12"
+                style={{
+                  background: `linear-gradient(90deg, ${s.p.color}, transparent)`,
+                }}
+              />
+              <div className="mt-1.5 overflow-hidden text-[10px] tracking-[0.28em] whitespace-nowrap text-[#c9a35c]">
                 {s.p.startYear} — {s.p.endYear}
+                {s.placards.length > 0 && (
+                  <span className="text-white/40">
+                    {"  ·  "}
+                    {s.placards.length} artists
+                  </span>
+                )}
               </div>
             </button>
 
@@ -671,7 +716,7 @@ export default function GalleryStripTimeline({
                     ref={(el) => {
                       placardInnerEls.current[pl.fi] = el;
                     }}
-                    className="relative cursor-pointer will-change-transform"
+                    className="pointer-events-auto relative cursor-pointer will-change-transform"
                     style={{ transformOrigin: "50% -14px" }}
                     title={pl.a.nationality ?? pl.a.name}
                     onPointerEnter={(e) =>
@@ -711,35 +756,39 @@ export default function GalleryStripTimeline({
                       }}
                     >
                       <div
-                        className="overflow-hidden"
+                        className="relative h-[104px] overflow-hidden"
                         style={{
                           border: "1px solid rgba(0,0,0,0.75)",
                           background: "#0e0c09",
                         }}
                       >
-                        {pl.a.portraitUrl ? (
+                        {/* monogram always underneath — shows when the
+                            portrait is missing OR fails to load */}
+                        <div
+                          className="font-display absolute inset-0 flex items-center justify-center text-2xl tracking-widest"
+                          style={{
+                            color: `${GOLD}99`,
+                            background:
+                              "radial-gradient(80% 80% at 50% 30%, #221c14, #14100a)",
+                          }}
+                        >
+                          {initials(pl.a.name)}
+                        </div>
+                        {pl.a.portraitUrl && (
                           // eslint-disable-next-line @next/next/no-img-element
                           <img
                             src={pl.a.portraitUrl}
-                            alt={pl.a.name}
+                            alt=""
                             width={PLACARD_W - 12}
                             height={104}
                             loading="lazy"
                             draggable={false}
-                            className="block h-[104px] w-full object-cover"
+                            className="absolute inset-0 h-full w-full object-cover"
                             style={{ filter: "saturate(0.92) contrast(1.02)" }}
-                          />
-                        ) : (
-                          <div
-                            className="font-display flex h-[104px] w-full items-center justify-center text-2xl tracking-widest"
-                            style={{
-                              color: `${GOLD}99`,
-                              background:
-                                "radial-gradient(80% 80% at 50% 30%, #221c14, #14100a)",
+                            onError={(e) => {
+                              e.currentTarget.style.display = "none";
                             }}
-                          >
-                            {initials(pl.a.name)}
-                          </div>
+                          />
                         )}
                       </div>
                     </div>

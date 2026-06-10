@@ -487,10 +487,10 @@ function Room({ roomL }: { roomL: number }) {
           depthScale={1.1}
           minDepthThreshold={0.4}
           maxDepthThreshold={1.4}
-          roughness={0.6}
-          metalness={0.25}
-          mirror={0.5}
-          color="#17130f"
+          roughness={0.5}
+          metalness={0.2}
+          mirror={0.55}
+          color="#2b231b"
         />
       </mesh>
 
@@ -814,7 +814,7 @@ export default function GalleryScene({ data }: { data: MuseumData }) {
         <NameWall artist={artist} halfL={halfL} dates={dates} />
 
         {/* low fill so the dark parts never go pure black */}
-        <hemisphereLight args={["#e9e2d2", "#33291f", 0.16]} />
+        <hemisphereLight args={["#e9e2d2", "#3d3226", 0.22]} />
         <PaintingBoundary fallback={null}>
           <Suspense fallback={null}>
             <Environment preset="apartment" environmentIntensity={0.25} />

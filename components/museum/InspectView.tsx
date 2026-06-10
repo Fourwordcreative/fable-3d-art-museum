@@ -11,9 +11,14 @@ export default function InspectView({
   painting: PaintingData;
   onClose: () => void;
 }) {
-  const [src, setSrc] = useState<string>(
-    painting.imageUrl || painting.thumbUrl || ""
-  );
+  // Prefer a 1920px Wikimedia render over the raw original (originals can be
+  // 50MB+ scans); fall back to the original for non-thumb URLs.
+  const [src, setSrc] = useState<string>(() => {
+    if (painting.thumbUrl?.includes("/1280px-")) {
+      return painting.thumbUrl.replace("/1280px-", "/1920px-");
+    }
+    return painting.imageUrl || painting.thumbUrl || "";
+  });
   const rootRef = useRef<HTMLDivElement>(null);
   const imgWrapRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLElement>(null);
