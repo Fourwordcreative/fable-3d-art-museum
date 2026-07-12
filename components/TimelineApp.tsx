@@ -7,11 +7,7 @@ import FilterDropdown from "./FilterDropdown";
 import ArtistCard from "./ArtistCard";
 
 const variants = {
-  river: dynamic(() => import("./timeline/RiverTimeline"), { ssr: false }),
   constellation: dynamic(() => import("./timeline/ConstellationTimeline"), {
-    ssr: false,
-  }),
-  strip: dynamic(() => import("./timeline/GalleryStripTimeline"), {
     ssr: false,
   }),
 } as const;
@@ -19,13 +15,11 @@ const variants = {
 type VariantKey = keyof typeof variants;
 
 const VARIANT_META: { key: VariantKey; label: string; title: string }[] = [
-  { key: "river", label: "A", title: "River of Time" },
   { key: "constellation", label: "B", title: "Constellation" },
-  { key: "strip", label: "C", title: "Gallery Strip" },
 ];
 
 export default function TimelineApp({ periods }: { periods: TimelinePeriod[] }) {
-  const [variant, setVariant] = useState<VariantKey>("river");
+  const [variant] = useState<VariantKey>("constellation");
   const [filter, setFilter] = useState<TimelineFilter>({
     periodSlug: null,
     artistSlug: null,
@@ -69,22 +63,6 @@ export default function TimelineApp({ periods }: { periods: TimelinePeriod[] }) 
             filter={filter}
             onChange={setFilter}
           />
-          <div className="flex overflow-hidden rounded-full border border-white/15 bg-black/40 backdrop-blur-md">
-            {VARIANT_META.map((v) => (
-              <button
-                key={v.key}
-                onClick={() => setVariant(v.key)}
-                title={v.title}
-                className={`px-4 py-2 text-sm tracking-widest transition-colors ${
-                  variant === v.key
-                    ? "bg-[var(--gold)] font-semibold text-black"
-                    : "text-white/70 hover:text-white"
-                }`}
-              >
-                {v.label}
-              </button>
-            ))}
-          </div>
         </div>
       </header>
 
