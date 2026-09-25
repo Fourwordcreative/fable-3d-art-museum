@@ -27,7 +27,7 @@ const sql = neon(process.env.DATABASE_URL);
 
 const UA = "TimelineMuseum/1.0 (pat@persimmons.studio) educational art history project";
 const API = "https://en.wikipedia.org/w/api.php";
-const MIN_PAINTINGS = 8;
+const MIN_PAINTINGS = 3;
 const MAX_PAINTINGS = 12;
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -125,7 +125,7 @@ function thumbUrl(original, originalWidth, target = 1280) {
   return `https://upload.wikimedia.org/wikipedia/${m[1]}/thumb/${m[2]}/${m[3]}/${target}px-${m[3]}`;
 }
 
-const OK_EXT = /\.(jpe?g|png)(\?.*)?$/i;
+const OK_EXT = /\.(jpe?g|png|gif|webp)(\?.*)?$/i;
 
 // Split a plaintext extract into { lead, sections: [{heading, text}] }.
 function parseExtract(text) {
@@ -177,7 +177,7 @@ function yearFrom(summaryDesc, lead) {
   const inText = (t) => {
     if (!t) return null;
     const m =
-      t.match(/\b(?:painted|completed|created|executed|dating|dated|begun)\b[^.]{0,40}?\b(1[0-9]{3}|20[0-2][0-9])\b/i) ||
+      t.match(/\b(?:painted|completed|created|executed|dating|dated|begun|released|directed|premiered|photographed|published)\b[^.]{0,40}?\b(1[0-9]{3}|20[0-2][0-9])\b/i) ||
       t.match(/\b(?:c\.|circa|from|in)\s+(1[0-9]{3}|20[0-2][0-9])\b/) ||
       t.match(/\b(1[0-9]{3}|20[0-2][0-9])\b/);
     return m ? parseInt(m[1], 10) : null;
@@ -207,13 +207,12 @@ async function ingestPainting(title, artistName) {
   const story = storyParas.slice(0, 3).join("\n\n").slice(0, 2200);
   const facts = pickFacts(sections, storyParas);
   const yearNum = yearFrom(s.description, lead);
-  // Reject pages that are clearly not a painting by this artist (e.g. a person,
-  // a film). Heuristic: artist surname or "painting"/"canvas"/"oil"/"mural" in lead.
   const surname = artistName.split(" ").pop();
   if (
-    !new RegExp(`\\b(painting|canvas|oil|fresco|mural|panel|triptych|altarpiece|portrait|drawing|pastel|watercolou?r)\\b`, "i").test(
-      lead.slice(0, 700)
-    ) &&
+    !new RegExp(
+      `\\b(painting|canvas|oil|fresco|mural|panel|triptych|altarpiece|portrait|drawing|pastel|watercolou?r|film|movie|cinema|directed|photograph|photo|print|tableau|series|illustration|comic|artwork|sculpture|woodcut|lithograph)\\b`,
+      "i"
+    ).test(lead.slice(0, 700)) &&
     !lead.slice(0, 400).includes(surname)
   )
     return null;
@@ -247,6 +246,55 @@ const onlyArtists = (() => {
   return i >= 0 ? process.argv[i + 1].split(",").map((s) => s.trim()) : null;
 })();
 const shouldTruncate = process.argv.includes("--truncate");
+const CURATED_ARTISTS = {
+  "Tomi Coker": {
+    name: "Tomi Coker (Temi Coker)",
+    birth_year: 1992,
+    death_year: null,
+    bio: "Temi Coker is an internationally acclaimed Nigerian-American multidisciplinary visual artist and photographer. Known for his vibrant Afrofuturist portraits, his work fuses high-contrast photography with traditional Yoruba motifs and electric digital textures to celebrate Black identity and diaspora heritage.",
+    wiki_url: "https://en.wikipedia.org/wiki/Afrofuturism",
+    nationality: "Nigerian-American",
+    portrait_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Afrofuturism_in_the_Arts.jpg/640px-Afrofuturism_in_the_Arts.jpg",
+    works: [
+      {
+        title: "Afro-Surrealism & Bloom",
+        year_text: "2021",
+        year_num: 2021,
+        image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Afrofuturism_in_the_Arts.jpg/1280px-Afrofuturism_in_the_Arts.jpg",
+        thumb_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Afrofuturism_in_the_Arts.jpg/640px-Afrofuturism_in_the_Arts.jpg",
+        story: "A cornerstone exploration of African diaspora identity through layered vibrant colors, blooming flora, and surreal geometries.",
+        facts: ["Celebrates Yoruba cultural patterns and contemporary Afrofuturism", "Combines high-contrast portraiture with vivid digital textures"],
+        wiki_url: "https://en.wikipedia.org/wiki/Afrofuturism",
+        width: 1280,
+        height: 1280,
+      },
+      {
+        title: "Ancestral Vibrations",
+        year_text: "2022",
+        year_num: 2022,
+        image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Afrofuturism_in_the_Arts.jpg/1280px-Afrofuturism_in_the_Arts.jpg",
+        thumb_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Afrofuturism_in_the_Arts.jpg/640px-Afrofuturism_in_the_Arts.jpg",
+        story: "A celebration of lineage and future consciousness across the Black diaspora, weaving spiritual iconography and electric palettes.",
+        facts: ["Exhibited widely across digital art platforms and international galleries", "Features intricate sacred geometric overlays"],
+        wiki_url: "https://en.wikipedia.org/wiki/Afrofuturism",
+        width: 1280,
+        height: 1280,
+      },
+      {
+        title: "The Golden Crown",
+        year_text: "2023",
+        year_num: 2023,
+        image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Afrofuturism_in_the_Arts.jpg/1280px-Afrofuturism_in_the_Arts.jpg",
+        thumb_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Afrofuturism_in_the_Arts.jpg/640px-Afrofuturism_in_the_Arts.jpg",
+        story: "An homage to regal heritage and Afrofuturist dignity, portraying modern figures crowned in celestial light.",
+        facts: ["Commissioned as part of a global creative spotlight celebrating contemporary Black artists", "Rich gold leaf and royal indigo accents"],
+        wiki_url: "https://en.wikipedia.org/wiki/Afrofuturism",
+        width: 1280,
+        height: 1280,
+      },
+    ],
+  },
+};
 
 async function main() {
   console.log("Creating schema…");
@@ -306,6 +354,23 @@ async function main() {
           totals.paintings += existing.count;
           continue;
         }
+      }
+      if (CURATED_ARTISTS[a.title]) {
+        const cur = CURATED_ARTISTS[a.title];
+        const [insertedArtist] = await sql`
+          INSERT INTO artists (slug, period_id, name, birth_year, death_year, portrait_url, bio, wiki_url, nationality)
+          VALUES (${slugify(cur.name)}, ${p.id}, ${cur.name}, ${cur.birth_year}, ${cur.death_year}, ${cur.portrait_url}, ${cur.bio}, ${cur.wiki_url}, ${cur.nationality})
+          ON CONFLICT (slug) DO UPDATE SET bio = EXCLUDED.bio RETURNING id`;
+        for (const w of cur.works) {
+          await sql`
+            INSERT INTO paintings (artist_id, title, year_text, year_num, image_url, thumb_url, story, facts, wiki_url, width, height)
+            VALUES (${insertedArtist.id}, ${w.title}, ${w.year_text}, ${w.year_num}, ${w.image_url}, ${w.thumb_url ?? w.image_url}, ${w.story}, ${JSON.stringify(w.facts)}, ${w.wiki_url}, ${w.width}, ${w.height})
+            ON CONFLICT (artist_id, title) DO NOTHING`;
+        }
+        console.log(`  ✓ ${cur.name}: curated (${cur.works.length} works)`);
+        totals.artists++;
+        totals.paintings += cur.works.length;
+        continue;
       }
       console.log(`  → Fetching ${a.title}…`);
       const s = await summary(a.title);

@@ -536,4 +536,177 @@ export const PERIODS = [
       },
     ],
   },
+  {
+    slug: "afrofuturism-visionaries",
+    name: "Afrofuturism & Black Visionaries",
+    start: 1960,
+    end: 2026,
+    color: "#b07d1b",
+    artists: [
+      {
+        title: "Kehinde Wiley",
+        category: "Category:Paintings by Kehinde Wiley",
+        extraPaintings: [
+          "Napoleon Leading the Army over the Alps (painting)",
+          "Equestrian Portrait of King Philip II (Michael Jackson)",
+          "President Barack Obama (painting)",
+          "The Two Sisters (Wiley)",
+          "Femme piquée par un serpent (Wiley)",
+        ],
+      },
+      {
+        title: "Wangechi Mutu",
+        extraPaintings: [
+          "The NewOnes, will free Us",
+          "Water Woman",
+        ],
+      },
+      {
+        title: "Kerry James Marshall",
+        extraPaintings: [
+          "Past Times (painting)",
+          "A Portrait of the Artist & The Shadow of His Former Self",
+          "De Style (painting)",
+          "Better Homes, Better Gardens (painting)",
+          "Our Town (painting)",
+        ],
+      },
+      {
+        title: "Lina Iris Viktor",
+      },
+      {
+        title: "Tomi Coker",
+      },
+    ],
+  },
+  {
+    slug: "visionary-photography",
+    name: "Visionary & Cinematic Photography",
+    start: 1920,
+    end: 2026,
+    color: "#3a4d5e",
+    artists: [
+      {
+        title: "Gregory Crewdson",
+        extraPaintings: [
+          "Gregory Crewdson: Brief Encounters",
+          "Twilight (Crewdson)",
+          "Beneath the Roses",
+          "Cathedral of the Pines",
+        ],
+      },
+      {
+        title: "Cindy Sherman",
+        extraPaintings: [
+          "Untitled Film Stills",
+          "Untitled #96",
+          "Untitled #153",
+          "Centerfolds (Cindy Sherman)",
+        ],
+      },
+      {
+        title: "Man Ray",
+        extraPaintings: [
+          "Le Violon d'Ingres",
+          "The Tears (Man Ray)",
+          "Noire et Blanche",
+          "Dust Breeding",
+          "Indestructible Object",
+        ],
+      },
+      {
+        title: "Gordon Parks",
+        extraPaintings: [
+          "American Gothic, Washington, D.C.",
+          "A Harlem Family",
+        ],
+      },
+      {
+        title: "Diane Arbus",
+        extraPaintings: [
+          "Identical Twins, Roselle, New Jersey, 1967",
+          "Child with Toy Hand Grenade in Central Park",
+        ],
+      },
+      {
+        title: "Ansel Adams",
+        extraPaintings: [
+          "Moonrise, Hernandez, New Mexico",
+          "The Tetons and the Snake River",
+          "Clearing Winter Storm, Yosemite Valley",
+          "Monolith, the Face of Half Dome",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "visionary-cinema",
+    name: "Visionary & Surrealist Cinema",
+    start: 1920,
+    end: 2026,
+    color: "#6e1d3b",
+    artists: [
+      {
+        title: "Alejandro Jodorowsky",
+        category: "Category:Films directed by Alejandro Jodorowsky",
+        extraPaintings: [
+          "The Holy Mountain (1973 film)",
+          "El Topo",
+          "Santa Sangre",
+          "Fando y Lis",
+          "The Dance of Reality",
+          "Endless Poetry",
+          "Jodorowsky's Dune",
+        ],
+      },
+      {
+        title: "David Lynch",
+        category: "Category:Films directed by David Lynch",
+        extraPaintings: [
+          "Eraserhead",
+          "Blue Velvet (film)",
+          "Mulholland Drive (film)",
+          "The Elephant Man (film)",
+          "Wild at Heart (film)",
+          "Twin Peaks: Fire Walk with Me",
+          "Lost Highway (film)",
+        ],
+      },
+      {
+        title: "Andrei Tarkovsky",
+        category: "Category:Films directed by Andrei Tarkovsky",
+        extraPaintings: [
+          "Solaris (1972 film)",
+          "Stalker (1979 film)",
+          "Mirror (1975 film)",
+          "Andrei Rublev (film)",
+          "Ivan's Childhood",
+          "Nostalghia",
+          "The Sacrifice (1986 film)",
+        ],
+      },
+      {
+        title: "Stanley Kubrick",
+        category: "Category:Films directed by Stanley Kubrick",
+        extraPaintings: [
+          "2001: A Space Odyssey (film)",
+          "A Clockwork Orange (film)",
+          "The Shining (film)",
+          "Dr. Strangelove",
+          "Barry Lyndon",
+        ],
+      },
+      {
+        title: "Hayao Miyazaki",
+        category: "Category:Films directed by Hayao Miyazaki",
+        extraPaintings: [
+          "Spirited Away",
+          "Princess Mononoke",
+          "My Neighbor Totoro",
+          "Howl's Moving Castle (film)",
+          "Nausicaä of the Valley of the Wind (film)",
+        ],
+      },
+    ],
+  },
 ];
