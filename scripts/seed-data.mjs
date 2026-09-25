@@ -112,6 +112,47 @@ export const PERIODS = [
       { title: "Caspar David Friedrich" },
       { title: "Théodore Géricault" },
       { title: "Eugène Delacroix" },
+      {
+        title: "William Blake",
+        category: "Category:Paintings by William Blake",
+        extraPaintings: [
+          "The Ancient of Days",
+          "The Ghost of a Flea",
+          "Newton (Blake)",
+          "The Great Red Dragon paintings",
+          "Nebuchadnezzar (Blake)",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "ukiyo-e",
+    name: "Japanese Ukiyo-e",
+    start: 1780,
+    end: 1860,
+    color: "#1f567a",
+    artists: [
+      {
+        title: "Hokusai",
+        category: "Category:Works by Hokusai",
+        extraPaintings: [
+          "The Great Wave off Kanagawa",
+          "Fine Wind, Clear Morning",
+          "Rainstorm Beneath the Summit",
+          "A Tour of the Waterfalls of the Provinces",
+          "Oceans of Wisdom",
+        ],
+      },
+      {
+        title: "Hiroshige",
+        category: "Category:Works by Utagawa Hiroshige",
+        extraPaintings: [
+          "The Fifty-three Stations of the Tōkaidō",
+          "One Hundred Famous Views of Edo",
+          "Sudden Shower over Shin-Ōhashi bridge and Atake",
+          "The Plum Garden in Kameido",
+        ],
+      },
     ],
   },
   {
@@ -157,6 +198,45 @@ export const PERIODS = [
       { title: "Henri de Toulouse-Lautrec" },
       { title: "Gustav Klimt" },
       { title: "Henri Rousseau" },
+    ],
+  },
+  {
+    slug: "art-nouveau-symbolism",
+    name: "Art Nouveau & Symbolism",
+    start: 1890,
+    end: 1914,
+    color: "#a88532",
+    artists: [
+      {
+        title: "Alphonse Mucha",
+        category: "Category:Paintings by Alphonse Mucha",
+        extraPaintings: [
+          "The Slav Epic",
+          "The Four Seasons (Mucha)",
+          "Gismonda",
+          "Zodiac (Mucha)",
+        ],
+      },
+      {
+        title: "Hilma af Klint",
+        category: "Category:Paintings by Hilma af Klint",
+        extraPaintings: [
+          "The Ten Largest",
+          "Altarpieces (Hilma af Klint)",
+          "The Swan (Hilma af Klint)",
+          "Evolution (Hilma af Klint)",
+        ],
+      },
+      {
+        title: "Odilon Redon",
+        category: "Category:Paintings by Odilon Redon",
+        extraPaintings: [
+          "The Cyclops (Redon)",
+          "Ophelia (Redon)",
+          "Pandora (Redon)",
+          "Buddha (Redon)",
+        ],
+      },
     ],
   },
   {
@@ -265,6 +345,43 @@ export const PERIODS = [
     ],
   },
   {
+    slug: "metaphysical-mathematical",
+    name: "Metaphysical & Mathematical Art",
+    start: 1910,
+    end: 1965,
+    color: "#3a506b",
+    artists: [
+      {
+        title: "M. C. Escher",
+        category: "Category:Works by M. C. Escher",
+        extraPaintings: [
+          "Relativity (M. C. Escher)",
+          "Drawing Hands",
+          "Waterfall (M. C. Escher)",
+          "Ascending and Descending",
+          "Hand with Reflecting Sphere",
+          "Sky and Water I",
+          "Metamorphosis I",
+          "Metamorphosis II",
+          "House of Stairs",
+          "Belvedere (M. C. Escher)",
+          "Reptiles (M. C. Escher)",
+          "Bond of Union",
+        ],
+      },
+      {
+        title: "Giorgio de Chirico",
+        extraPaintings: [
+          "The Song of Love (de Chirico)",
+          "The Mystery and Melancholy of a Street",
+          "The Nostalgia of the Infinite",
+          "The Disquieting Muses",
+          "Guglielmo Marconi (portrait)",
+        ],
+      },
+    ],
+  },
+  {
     slug: "american-modernism",
     name: "American Modernism",
     start: 1920,
@@ -275,6 +392,51 @@ export const PERIODS = [
       { title: "Grant Wood" },
       { title: "Jacob Lawrence" },
       { title: "Thomas Hart Benton (painter)" },
+    ],
+  },
+  {
+    slug: "golden-age-illustration",
+    name: "Golden Age Illustration & Realism",
+    start: 1900,
+    end: 1970,
+    color: "#6b583a",
+    artists: [
+      {
+        title: "N. C. Wyeth",
+        category: "Category:Works by N. C. Wyeth",
+        extraPaintings: [
+          "The Giant (Wyeth)",
+          "Treasure Island",
+          "Robin Hood",
+          "The Boy's King Arthur",
+          "Island Funeral",
+          "In the Dark of the Moon",
+          "The Hunter (Wyeth)",
+          "Stand and Deliver (Wyeth)",
+        ],
+      },
+      {
+        title: "Andrew Wyeth",
+        extraPaintings: [
+          "Christina's World",
+          "Wind from the Sea (painting)",
+          "Winter 1946",
+          "Braids (painting)",
+          "Trodden Weed",
+          "Siri (painting)",
+          "Master Bedroom (painting)",
+        ],
+      },
+      {
+        title: "Maxfield Parrish",
+        category: "Category:Works by Maxfield Parrish",
+        extraPaintings: [
+          "Daybreak (painting)",
+          "Ecstasy (painting)",
+          "The Lantern Bearers (Parrish)",
+          "Stars (Parrish)",
+        ],
+      },
     ],
   },
   {
