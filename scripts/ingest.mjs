@@ -11,7 +11,13 @@ import { PERIODS } from "./seed-data.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 for (const line of readFileSync(join(root, ".env.local"), "utf8").split("\n")) {
   const m = line.match(/^([A-Z_]+)=(.*)$/);
-  if (m && !process.env[m[1]]) process.env[m[1]] = m[2].trim();
+  if (m && !process.env[m[1]]) {
+    let val = m[2].trim();
+    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+      val = val.slice(1, -1);
+    }
+    process.env[m[1]] = val;
+  }
 }
 if (!process.env.DATABASE_URL) {
   console.error("DATABASE_URL missing from .env.local");
@@ -111,14 +117,15 @@ const THUMB_BUCKETS = [500, 960, 1280, 1920];
 function thumbUrl(original, originalWidth, target = 1280) {
   target = THUMB_BUCKETS.filter((b) => b <= target).pop() ?? 500;
   if (!original || originalWidth <= target) return original;
-  const m = original.match(
+  const clean = original.split("?")[0];
+  const m = clean.match(
     /^https:\/\/upload\.wikimedia\.org\/wikipedia\/(commons|en)\/(.\/..)\/(.+)$/
   );
   if (!m) return original;
   return `https://upload.wikimedia.org/wikipedia/${m[1]}/thumb/${m[2]}/${m[3]}/${target}px-${m[3]}`;
 }
 
-const OK_EXT = /\.(jpe?g|png)$/i;
+const OK_EXT = /\.(jpe?g|png)(\?.*)?$/i;
 
 // Split a plaintext extract into { lead, sections: [{heading, text}] }.
 function parseExtract(text) {
@@ -210,11 +217,12 @@ async function ingestPainting(title, artistName) {
     !lead.slice(0, 400).includes(surname)
   )
     return null;
+  const cleanSource = img.source.split("?")[0];
   return {
     title: s.title ?? title,
     year_text: yearNum ? String(yearNum) : null,
     year_num: yearNum,
-    image_url: img.source,
+    image_url: cleanSource,
     thumb_url: thumbUrl(img.source, img.width, 1280),
     story,
     facts,
@@ -238,6 +246,7 @@ const onlyArtists = (() => {
   const i = process.argv.indexOf("--artists");
   return i >= 0 ? process.argv[i + 1].split(",").map((s) => s.trim()) : null;
 })();
+const shouldTruncate = process.argv.includes("--truncate");
 
 async function main() {
   console.log("Creating schema…");
@@ -262,7 +271,8 @@ async function main() {
     width int, height int,
     UNIQUE (artist_id, title)
   )`;
-  if (!onlyArtists) {
+  if (shouldTruncate) {
+    console.log("Truncating existing tables...");
     await sql`TRUNCATE paintings, artists, periods RESTART IDENTITY CASCADE`;
   }
 
@@ -283,7 +293,21 @@ async function main() {
     for (const a of periodArtists) {
       if (onlyArtists) {
         await sql`DELETE FROM artists WHERE name = ${a.title} OR slug = ${slugify(a.title)}`;
+      } else {
+        const [existing] = await sql`
+          SELECT a.id, count(p.id)::int as count 
+          FROM artists a 
+          LEFT JOIN paintings p ON p.artist_id = a.id 
+          WHERE a.name = ${a.title} OR a.slug = ${slugify(a.title)}
+          GROUP BY a.id`;
+        if (existing && existing.count >= 6) {
+          console.log(`  ✓ ${a.title}: already in database (${existing.count} paintings), skipping`);
+          totals.artists++;
+          totals.paintings += existing.count;
+          continue;
+        }
       }
+      console.log(`  → Fetching ${a.title}…`);
       const s = await summary(a.title);
       if (!s) {
         console.log(`  !! no summary for ${a.title}, skipping`);

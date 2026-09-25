@@ -125,6 +125,7 @@ export const PERIODS = [
       { title: "Gustave Courbet" },
       { title: "Édouard Manet" },
       { title: "Winslow Homer" },
+      { title: "John Singer Sargent" },
     ],
   },
   {
@@ -139,6 +140,7 @@ export const PERIODS = [
       { title: "Claude Monet" },
       { title: "Pierre-Auguste Renoir" },
       { title: "Mary Cassatt" },
+      { title: "Berthe Morisot" },
     ],
   },
   {
@@ -153,6 +155,8 @@ export const PERIODS = [
       { title: "Vincent van Gogh" },
       { title: "Georges Seurat" },
       { title: "Henri de Toulouse-Lautrec" },
+      { title: "Gustav Klimt" },
+      { title: "Henri Rousseau" },
     ],
   },
   {
@@ -166,6 +170,8 @@ export const PERIODS = [
       { title: "Wassily Kandinsky" },
       { title: "Franz Marc" },
       { title: "Ernst Ludwig Kirchner" },
+      { title: "Amedeo Modigliani" },
+      { title: "Paul Klee" },
       {
         title: "Egon Schiele",
         extraPaintings: [
@@ -206,6 +212,7 @@ export const PERIODS = [
       { title: "René Magritte" },
       { title: "Salvador Dalí" },
       { title: "Frida Kahlo" },
+      { title: "Marc Chagall" },
     ],
   },
   {
@@ -218,6 +225,7 @@ export const PERIODS = [
       { title: "Willem de Kooning" },
       { title: "Jackson Pollock" },
       { title: "Mark Rothko" },
+      { title: "Georgia O'Keeffe" },
     ],
   },
   {

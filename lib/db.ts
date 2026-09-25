@@ -1,10 +1,15 @@
 import { neon } from "@neondatabase/serverless";
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL is not set");
+const connectionString =
+  process.env.DATABASE_URL ||
+  process.env.POSTGRES_URL ||
+  process.env.STORAGE_URL;
+
+if (!connectionString) {
+  throw new Error("DATABASE_URL, POSTGRES_URL, or STORAGE_URL is not set");
 }
 
-export const sql = neon(process.env.DATABASE_URL);
+export const sql = neon(connectionString);
 
 export type Period = {
   id: number;
