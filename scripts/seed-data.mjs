@@ -160,6 +160,19 @@ export const PERIODS = [
     ],
   },
   {
+    slug: "fauvism",
+    name: "Fauvism",
+    start: 1904,
+    end: 1910,
+    color: "#d94e28",
+    artists: [
+      { title: "Henri Matisse" },
+      { title: "André Derain" },
+      { title: "Maurice de Vlaminck" },
+      { title: "Kees van Dongen" },
+    ],
+  },
+  {
     slug: "expressionism",
     name: "Expressionism",
     start: 1905,
@@ -201,6 +214,42 @@ export const PERIODS = [
     ],
   },
   {
+    slug: "futurism",
+    name: "Futurism",
+    start: 1909,
+    end: 1930,
+    color: "#a83248",
+    artists: [
+      { title: "Umberto Boccioni" },
+      { title: "Giacomo Balla" },
+      { title: "Gino Severini" },
+    ],
+  },
+  {
+    slug: "de-stijl-suprematism",
+    name: "De Stijl & Suprematism",
+    start: 1913,
+    end: 1931,
+    color: "#1d4e89",
+    artists: [
+      { title: "Piet Mondrian" },
+      { title: "Kazimir Malevich" },
+      { title: "Theo van Doesburg" },
+    ],
+  },
+  {
+    slug: "dada",
+    name: "Dada",
+    start: 1916,
+    end: 1924,
+    color: "#4a4e51",
+    artists: [
+      { title: "Marcel Duchamp" },
+      { title: "Francis Picabia" },
+      { title: "Hannah Höch" },
+    ],
+  },
+  {
     slug: "surrealism",
     name: "Surrealism",
     start: 1920,
@@ -216,6 +265,19 @@ export const PERIODS = [
     ],
   },
   {
+    slug: "american-modernism",
+    name: "American Modernism",
+    start: 1920,
+    end: 1950,
+    color: "#466365",
+    artists: [
+      { title: "Edward Hopper" },
+      { title: "Grant Wood" },
+      { title: "Jacob Lawrence" },
+      { title: "Thomas Hart Benton (painter)" },
+    ],
+  },
+  {
     slug: "abstract-expressionism",
     name: "Abstract Expressionism",
     start: 1943,
@@ -226,6 +288,19 @@ export const PERIODS = [
       { title: "Jackson Pollock" },
       { title: "Mark Rothko" },
       { title: "Georgia O'Keeffe" },
+    ],
+  },
+  {
+    slug: "color-field",
+    name: "Color Field & Minimalism",
+    start: 1950,
+    end: 1975,
+    color: "#286b7b",
+    artists: [
+      { title: "Helen Frankenthaler" },
+      { title: "Cy Twombly" },
+      { title: "Yves Klein" },
+      { title: "Frank Stella" },
     ],
   },
   {
@@ -250,6 +325,7 @@ export const PERIODS = [
       },
       { title: "Andy Warhol" },
       { title: "Roy Lichtenstein" },
+      { title: "Keith Haring" },
     ],
   },
   {
@@ -277,6 +353,8 @@ export const PERIODS = [
           "Garrowby Hill",
         ],
       },
+      { title: "Yayoi Kusama" },
+      { title: "Gerhard Richter" },
       {
         title: "Banksy",
         category: "Category:Works by Banksy",
